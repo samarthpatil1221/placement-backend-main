@@ -4,25 +4,28 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import jakarta.persistence.GenerationType;
 
 @Entity
+@Table(name = "FEEDBACK") // Oracle resolves unquoted to uppercase table FEEDBACK
+@SequenceGenerator(name = "FEEDBACK_SEQ", sequenceName = "FEEDBACK_SEQ", allocationSize = 1)
 public class Feedback {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FEEDBACK_SEQ")
     private Long id;
- 
 
     private String company;
     private String category;
-    
     private String subject;
     private String details;
     private String suggestions;
     private boolean anonymous;
 
-    private int interviewRounds;
+    // Use wrapper to allow null when category != 'interview'
+    private Integer interviewRounds;
     private String interviewDescription;
     private String roundReached;
     private String interviewDifficulty;
@@ -71,18 +74,15 @@ public class Feedback {
 	public void setAnonymous(boolean anonymous) {
 		this.anonymous = anonymous;
 	}
-	public int getInterviewRounds() {
-		return interviewRounds;
-	}
+	public Integer getInterviewRounds() { return interviewRounds; }
 	public void setInterviewRounds(int interviewRounds) {
 		this.interviewRounds = interviewRounds;
 	}
 	public String getInterviewDescription() {
 		return interviewDescription;
 	}
-	public void setInterviewDescription(String interviewDescription) {
-		this.interviewDescription = interviewDescription;
-	}
+	public void setInterviewRounds(Integer interviewRounds) { this.interviewRounds = interviewRounds; }
+
 	public String getRoundReached() {
 		return roundReached;
 	}

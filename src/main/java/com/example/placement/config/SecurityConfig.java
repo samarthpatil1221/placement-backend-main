@@ -37,12 +37,14 @@ public class SecurityConfig {
             .csrf().disable()
             .cors().configurationSource(corsConfigurationSource()).and()
             .authorizeHttpRequests(auth -> auth
-            	    .requestMatchers("/api/auth/**", "/health").permitAll()
-            	    .requestMatchers(HttpMethod.POST, "/api/feedback").permitAll()
-            	    .requestMatchers("/api/admin/**").hasRole("ADMIN")
-            	    .requestMatchers("/api/student/**").hasAnyRole("STUDENT", "ADMIN")
-            	    .requestMatchers(HttpMethod.GET, "/api/admin/feedback-reports").hasRole("ADMIN")
-            	    .anyRequest().authenticated()
+            		// inside authorizeHttpRequests(...)
+            		.requestMatchers("/api/auth/**", "/health").permitAll()
+            		.requestMatchers(HttpMethod.POST, "/api/feed/feedback").permitAll()
+            		.requestMatchers(HttpMethod.GET, "/api/admin/feedback-reports").hasRole("ADMIN")
+            		.requestMatchers("/api/admin/**").hasRole("ADMIN")
+            		.requestMatchers("/api/student/**").hasAnyRole("STUDENT", "ADMIN")
+            		.anyRequest().authenticated()
+
             	)
 
             // NO formLogin() here
